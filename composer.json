@@ -1,7 +1,7 @@
 {
     "name": "brandrehab/slate",
     "description": "Slate CMS.",
-    "keywords": ["cms", "laravel", "lumen", "slate"]],
+    "keywords": ["cms", "laravel", "lumen", "slate"],
     "license": "MIT",
     "type": "project",
     "require": {
