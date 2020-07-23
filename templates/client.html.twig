@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block head %}
+    {% if head %}
+      {% include 'client/head.html.twig' with {'head' : head} only %}
+    {% else %}
+      <title>The Title</title>
+    {% endif %}
+{% endblock %}
+
+{% block header %}
+    {% if navigation %}
+      {% include 'client/navigation.html.twig' with {'navigation' : navigation} only %}
+    {% endif %}
+
+    {% if banners %}
+      {% include 'client/banners.html.twig' with {'banners' : banners} only %}
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    <p>The main.</p>
+{% endblock %}
+
+{% block footer %}
+  {% if footer %}
+    {% include 'client/footer.html.twig' with {'footer' : footer} only %}
+  {% endif %}
+{% endblock %}
