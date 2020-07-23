@@ -2,6 +2,7 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -15,10 +16,12 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-foreach (DB::table('routes')->select()->get() as $route) {
-    $verb = $route->verb;
-    $router->{$route->verb}($route->path, [
-      'as' => $route->name,
-      'uses' => $route->controller . '@' . $route->action,
-    ]);
+if (Schema::hasTable('routes')) {
+    foreach (DB::table('routes')->select()->get() as $route) {
+        $verb = $route->verb;
+        $router->{$route->verb}($route->path, [
+          'as' => $route->name,
+          'uses' => $route->controller . '@' . $route->action,
+        ]);
+    }
 }
