@@ -8,12 +8,12 @@ use App\Blocks\BannersBlock;
 use App\Blocks\FooterBlock;
 use App\Blocks\NavigationBlock;
 use App\Blocks\HeadBlock;
-use App\Blocks\Admin\GroupsBlock;
+use Slate\Factories\BlockFactoryInterface;
 
 /**
  * Create a new instance of a block.
  */
-class BlockFactory
+class BlockFactory implements BlockFactoryInterface
 {
     /**
      * Attempt to create the requested block.
@@ -55,13 +55,5 @@ class BlockFactory
     private function head(array $config): HeadBlock
     {
         return new HeadBlock($config);
-    }
-
-    /**
-     * Admin groups block.
-     */
-    private function adminGroups(array $config): GroupsBlock
-    {
-        return new GroupsBlock($config);
     }
 }

@@ -13,9 +13,9 @@ use Illuminate\Http\Response;
  */
 class SectionController extends Controller
 {
-  /**
-   * Render a section page.
-   */
+    /**
+     * Render a section page.
+     */
     public function show(string $slug): Response
     {
         $view = $this->view->create('section');

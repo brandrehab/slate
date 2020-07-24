@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Factories\BlockFactory;
+use Slate\Factories\AdminBlockFactory;
 use Illuminate\Support\ServiceProvider;
 
 class BlockServiceProvider extends ServiceProvider
@@ -16,6 +17,10 @@ class BlockServiceProvider extends ServiceProvider
     {
         $this->app->bind(BlockFactory::class, function ($app) {
             return new BlockFactory();
+        });
+
+        $this->app->bind(AdminBlockFactory::class, function ($app) {
+            return new AdminBlockFactory();
         });
     }
 }

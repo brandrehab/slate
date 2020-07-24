@@ -13,9 +13,9 @@ use Illuminate\Http\Response;
  */
 class HomeController extends Controller
 {
-  /**
-   * Render the home page.
-   */
+    /**
+     * Render the home page.
+     */
     public function show(): Response
     {
         $view = $this->view->create('home');

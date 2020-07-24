@@ -4,15 +4,19 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Group</th>
+          <th scope="col">Type</th>
+          <th scope="col">Heading</th>
+          <th scope="col">Slug</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
-          {% for group in groups %}
+          {% for node in nodes %}
             <tr>
-              <th scope="row">{{group.id}}</th>
-              <td>{{group.name}}</td>
+              <th scope="row">{{node.id}}</th>
+              <td>{{node.nodetype.name}}</td>
+              <td>{{node.heading}}</td>
+              <td>{{node.slug}}</td>
               <td><a href="#" class="btn btn-sm btn-primary">Edit</a></td>
             </tr>
           {% endfor %}

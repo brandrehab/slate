@@ -115,4 +115,10 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
+$app->router->group([
+    'namespace' => 'Slate\Http\Controllers\Admin',
+], function ($router) {
+    require __DIR__.'/../routes/slate.php';
+});
+
 return $app;
