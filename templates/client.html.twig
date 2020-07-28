@@ -1,11 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block head %}
-    {% if head %}
-      {% include 'client/head.html.twig' with {'head' : head} only %}
-    {% else %}
-      <title>The Title</title>
-    {% endif %}
+    {% include 'client/head.html.twig' with {'head' : head} only %}
 {% endblock %}
 
 {% block header %}

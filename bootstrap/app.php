@@ -48,6 +48,13 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton(
+    Illuminate\Session\SessionManager::class,
+    function () use ($app) {
+        return new Illuminate\Session\SessionManager($app);
+    }
+);
+
 /*
 |--------------------------------------------------------------------------
 | Register Config Files
@@ -60,6 +67,7 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('manifest');
 
 /*
 |--------------------------------------------------------------------------
@@ -72,9 +80,9 @@ $app->configure('app');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    Illuminate\Session\Middleware\StartSession::class,
+]);
 
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
@@ -91,12 +99,14 @@ $app->configure('app');
 |
 */
 
+$app->configure('session');
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\BlockServiceProvider::class);
 $app->register(App\Providers\TwigServiceProvider::class);
 $app->register(App\Providers\ViewServiceProvider::class);
+$app->register(Illuminate\Session\SessionServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

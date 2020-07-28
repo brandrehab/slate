@@ -18,7 +18,32 @@ $router->get('/admin/nodes', [
     'uses' => 'NodesController@show',
 ]);
 
+$router->get('/admin/nodes/{id:\d+}', [
+    'as' => 'admin.node.get',
+    'uses' => 'NodesController@edit',
+]);
+
 $router->get('/admin/groups', [
     'as' => 'admin.groups.get',
     'uses' => 'GroupsController@show',
+]);
+
+$router->post('/admin/groups/reorder', [
+    'as' => 'admin.groups.reorder',
+    'uses' => 'GroupsController@reorder',
+]);
+
+$router->get('/admin/groups/{id:\d+}', [
+    'as' => 'admin.group.get',
+    'uses' => 'GroupsController@edit',
+]);
+
+$router->post('/admin/groups/{id:\d+}', [
+    'as' => 'admin.group.post',
+    'uses' => 'GroupsController@update',
+]);
+
+$router->post('/admin/fields/reorder', [
+    'as' => 'admin.fields.reorder',
+    'uses' => 'FieldsController@reorder',
 ]);

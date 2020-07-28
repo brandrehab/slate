@@ -1,0 +1,114 @@
+<div class="row">
+  <div class="col-12">
+    <form method="POST" action="{{route('admin.group.post', {'id': group.id})}}">
+      <div class="card text-white bg-dark mb-4">
+        <div class="card-header">admin.group</div>
+        <div class="card-body">
+          <h5 class="card-title">Group Edit</h5>
+
+          <div class="row">
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control border-dark {{invalid('name')}}" id="name" name="name" aria-describedby="nameHelp" maxlength="100" required autofocus value="{{old('name', group.name)}}">
+                <small id="nameHelp" class="form-text">Name of the group.</small>
+                {% if invalid('name') %}<div class="invalid-feedback text-warning">{{errors('name')}}</div>{% endif %}
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control border-dark {{invalid('description')}}" id="description" name="description" aria-describedby="descriptionHelp" maxlength="200" required value="{{old('description', group.description)}}">
+                <small id="descriptionHelp" class="form-text">Short description of the group role.</small>
+                {% if invalid('description') %}<div class="invalid-feedback text-warning">{{errors('description')}}</div>{% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label for="minimum">Minimum</label>
+                <input type="number" class="form-control border-dark {{invalid('minimum')}}" id="minimum" name="minimum" min="0" max="999" step="1" aria-describedby="minimumHelp" required value="{{old('minimum', group.minimum)}}">
+                <small id="minimumHelp" class="form-text">Minimum iterations of this group (0 for optional).</small>
+                {% if invalid('minimum') %}<div class="invalid-feedback text-warning">{{errors('minimum')}}</div>{% endif %}
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label for="maximum">Maximum</label>
+                <input type="number" class="form-control border-dark {{invalid('maximum')}}" id="maximum" name="maximum" min="0" max="999" step="1" aria-describedby="maximumHelp" required value="{{old('maximum', group.maximum)}}">
+                <small id="maximumHelp" class="form-text">Maximum iterations of this group (0 for optional).</small>
+                {% if invalid('maximum') %}<div class="invalid-feedback text-warning">{{errors('maximum')}}</div>{% endif %}
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-outline-warning">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card text-white bg-dark mb-4">
+      <div class="card-header">admin.group.fields</div>
+      <div class="card-body">
+        <h5 class="card-title">Field Index</h5>
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Order</th>
+                <th scope="col">Field</th>
+                <th scope="col">Type</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody data-collection="field-index">
+                {% for field in group.fields.sortBy('weight') %}
+                  <tr data-id="{{field.id}}">
+                    <th scope="row"><button class="handle btn btn-sm btn-outline-warning">&#8597;</button></th>
+                    <td>{{field.name}}</td>
+                    <td>{{field.fieldtype.name}}</td>
+                    <td><a href="#" class="btn btn-sm btn-outline-warning">Edit</a></td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    Sortable.create($('[data-collection="field-index"]')[0], {
+      animation: 150,
+      ghostClass: 'bg-warning',
+      dragClass: "bg-info",
+      handle: '.handle',
+      direction: 'vertical',
+      onEnd: function(evt) {
+        var ids = [];
+        $('[data-collection="field-index"] [data-id]').each(function(idx, ele) {
+          ids.push($(ele).data('id'));
+        });
+        axios.post('{{route('admin.fields.reorder')}}', {
+          ids: ids,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
+    });
+  });
+</script>

@@ -26,6 +26,7 @@ class SectionView extends View
     public function render(Node $node): Response
     {
         return new Response($this->wrapper->render([
+            'head' => $this->block->create('head', ['seo' => $node->seo]),
             'navigation' => $this->block->create('navigation', ['node' => $node]),
             'banners' => $this->block->create('banners', ['node' => $node]),
             'footer' => $this->block->create('footer', ['node' => $node]),

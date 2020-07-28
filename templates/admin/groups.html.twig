@@ -1,22 +1,57 @@
 <div class="row">
   <div class="col-12">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Group</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-          {% for group in groups %}
-            <tr>
-              <th scope="row">{{group.id}}</th>
-              <td>{{group.name}}</td>
-              <td><a href="#" class="btn btn-sm btn-primary">Edit</a></td>
-            </tr>
-          {% endfor %}
-      </tbody>
-    </table>
+    <div class="card text-white bg-dark mb-4">
+      <div class="card-header">admin.groups</div>
+      <div class="card-body">
+        <h5 class="card-title">Group Index</h5>
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Order</th>
+                <th scope="col">Group</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody data-collection="group-index">
+                {% for group in groups.sortBy('weight') %}
+                  <tr data-id="{{group.id}}">
+                    <th scope="row"><button class="handle btn btn-sm btn-outline-warning">&#8597;</button></th>
+                    <td>{{group.name}}</td>
+                    <td><a href="{{route('admin.group.get', {'id': group.id})}}" class="btn btn-sm btn-outline-warning">Edit</a></td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(function() {
+    Sortable.create($('[data-collection="group-index"]')[0], {
+      animation: 150,
+      ghostClass: 'bg-warning',
+      dragClass: "bg-info",
+      handle: '.handle',
+      direction: 'vertical',
+      onEnd: function(evt) {
+        var ids = [];
+        $('[data-collection="group-index"] [data-id]').each(function(idx, ele) {
+          ids.push($(ele).data('id'));
+        });
+        axios.post('{{route('admin.groups.reorder')}}', {
+          ids: ids,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
+    });
+  });
+</script>
